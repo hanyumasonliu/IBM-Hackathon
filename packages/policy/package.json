@@ -1,0 +1,25 @@
+{
+  "name": "@mcp-shield/policy",
+  "version": "0.1.0",
+  "description": "Policy generator for creating safe guardrails from unsafe configurations",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "mcp",
+    "security",
+    "policy",
+    "guardrails"
+  ],
+  "author": "Mason Liu",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.2",
+    "vitest": "^1.0.4"
+  }
+}
