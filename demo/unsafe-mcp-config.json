@@ -1,0 +1,55 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/"],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "shell-executor": {
+      "command": "node",
+      "args": ["./custom-shell-server.js"],
+      "allowedCommands": ["*"]
+    },
+    "database": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_CONNECTION": "postgresql://admin:password123@localhost:5432/production"
+      }
+    },
+    "web-scraper": {
+      "command": "python",
+      "args": ["-m", "mcp_server_scraper"],
+      "allowedDomains": ["*"],
+      "followRedirects": true,
+      "executeJavaScript": true
+    },
+    "env-reader": {
+      "command": "node",
+      "args": ["./env-reader-server.js"],
+      "allowedFiles": [".env", ".env.local", ".env.production"],
+      "canReadSecrets": true
+    },
+    "remote-api": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "baseUrl": "http://internal-api.company.com",
+      "authentication": "none",
+      "allowInsecureConnections": true
+    }
+  },
+  "security": {
+    "sandboxing": false,
+    "allowNetworkAccess": true,
+    "allowFileSystemAccess": true,
+    "maxMemoryMB": -1,
+    "timeout": 0
+  },
+  "logging": {
+    "level": "debug",
+    "includeSecrets": true,
+    "destination": "/tmp/mcp-logs.txt"
+  }
+}

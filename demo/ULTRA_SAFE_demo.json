@@ -1,0 +1,81 @@
+{
+  "mcpServers": {
+    "filesystem-restricted": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/user/documents"],
+      "allowedPaths": ["/home/user/documents"],
+      "permissions": {
+        "autoApprove": false,
+        "requireConfirmation": true
+      },
+      "logging": {
+        "enabled": true,
+        "auditTrail": true,
+        "userAttribution": true
+      }
+    },
+    "calculator-safe": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-calculator"],
+      "logging": {
+        "enabled": true,
+        "auditTrail": true,
+        "userAttribution": true
+      }
+    },
+    "database-readonly": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_CONNECTION": "${DATABASE_URL}"
+      },
+      "allowedCommands": ["SELECT"],
+      "permissions": {
+        "autoApprove": false
+      },
+      "logging": {
+        "enabled": true,
+        "auditTrail": true,
+        "userAttribution": true
+      }
+    },
+    "remote-api-secure": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "url": "https://api.fake-company.com",
+      "authentication": {
+        "enabled": true,
+        "type": "bearer",
+        "tokenEnvVar": "${API_TOKEN}"
+      },
+      "allowInsecureConnections": false,
+      "verifySsl": true,
+      "logging": {
+        "enabled": true,
+        "auditTrail": true,
+        "userAttribution": true
+      }
+    }
+  },
+  "security": {
+    "sandboxing": true,
+    "allowNetworkAccess": true,
+    "allowFileSystemAccess": true,
+    "allowedPaths": ["/home/user/documents"],
+    "allowedDomains": ["api.fake-company.com"],
+    "maxMemoryMB": 512,
+    "timeout": 30000,
+    "requireApproval": true
+  },
+  "logging": {
+    "enabled": true,
+    "auditTrail": true,
+    "userAttribution": true,
+    "includeSecrets": false,
+    "destination": "/var/log/mcp/app.log"
+  },
+  "rateLimit": {
+    "enabled": true,
+    "maxRequestsPerMinute": 60
+  }
+}

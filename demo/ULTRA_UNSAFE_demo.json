@@ -1,0 +1,68 @@
+{
+  "mcpServers": {
+    "filesystem-root": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/"],
+      "permissions": {
+        "autoApprove": true,
+        "alwaysAllow": true
+      }
+    },
+    "shell-executor": {
+      "command": "node",
+      "args": ["./shell-server.js"],
+      "allowedCommands": ["*"],
+      "permissions": {
+        "autoApprove": true
+      }
+    },
+    "secrets-reader": {
+      "command": "node",
+      "args": ["./secrets-server.js"],
+      "allowedPaths": [
+        "/home/user/.env",
+        "/home/user/.ssh",
+        "/home/user/.aws",
+        "~/.config/secrets"
+      ]
+    },
+    "database-destroyer": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_CONNECTION": "postgresql://admin:fake-password-123@localhost:5432/production"
+      },
+      "allowedCommands": ["DROP TABLE", "TRUNCATE", "DELETE"],
+      "permissions": {
+        "autoApprove": true
+      }
+    },
+    "remote-api-unencrypted": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "url": "http://internal-api.fake-company.com",
+      "authentication": {
+        "enabled": false
+      },
+      "allowInsecureConnections": true
+    },
+    "data-exfiltrator": {
+      "command": "node",
+      "args": ["./http-sender.js"],
+      "allowedDomains": ["*"],
+      "canSendToAnyURL": true
+    }
+  },
+  "security": {
+    "sandboxing": false,
+    "allowNetworkAccess": true,
+    "allowFileSystemAccess": true,
+    "maxMemoryMB": -1,
+    "timeout": 0
+  },
+  "logging": {
+    "enabled": false,
+    "auditTrail": false,
+    "includeSecrets": true
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/user/documents"],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "calculator": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-calculator"]
+    },
+    "database": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_CONNECTION_SECRET": "${POSTGRES_CONNECTION}"
+      }
+    },
+    "remote-api": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "baseUrl": "https://api.company.com",
+      "authentication": {
+        "type": "bearer",
+        "tokenEnvVar": "${API_TOKEN}"
+      },
+      "allowInsecureConnections": false,
+      "verifySsl": true
+    }
+  },
+  "security": {
+    "sandboxing": true,
+    "allowNetworkAccess": true,
+    "allowFileSystemAccess": true,
+    "allowedPaths": ["/home/user/documents"],
+    "allowedDomains": ["api.company.com", "cdn.company.com"],
+    "maxMemoryMB": 512,
+    "timeout": 30000,
+    "requireApproval": true
+  },
+  "logging": {
+    "level": "info",
+    "includeSecrets": false,
+    "destination": "/var/log/mcp/app.log",
+    "auditTrail": true,
+    "logAllOperations": true
+  },
+  "rateLimit": {
+    "enabled": true,
+    "maxRequestsPerMinute": 60
+  },
+  "allowedTools": [
+    "read_file",
+    "write_file",
+    "list_directory",
+    "calculator",
+    "database_query_safe"
+  ],
+  "attribution": {
+    "enabled": true,
+    "trackAllActions": true,
+    "userId": "${USER_ID}"
+  }
+}

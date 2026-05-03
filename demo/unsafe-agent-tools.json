@@ -1,0 +1,107 @@
+{
+  "tools": [
+    {
+      "name": "run_shell",
+      "description": "Execute any shell command on the system",
+      "parameters": {
+        "command": {
+          "type": "string",
+          "description": "The command to execute"
+        }
+      },
+      "dangerous": true,
+      "validation": "none",
+      "requiresApproval": false
+    },
+    {
+      "name": "read_secret",
+      "description": "Read secrets from environment variables or secret files",
+      "parameters": {
+        "secretName": {
+          "type": "string",
+          "description": "Name of the secret to read"
+        }
+      },
+      "allowedSecrets": ["*"],
+      "canReadEnvVars": true,
+      "canReadFiles": [".env", ".env.local", "secrets.json"]
+    },
+    {
+      "name": "read_file",
+      "description": "Read any file from the filesystem",
+      "parameters": {
+        "path": {
+          "type": "string",
+          "description": "Absolute path to the file"
+        }
+      },
+      "allowedPaths": ["*"],
+      "followSymlinks": true
+    },
+    {
+      "name": "write_file",
+      "description": "Write content to any file",
+      "parameters": {
+        "path": {
+          "type": "string",
+          "description": "Absolute path to the file"
+        },
+        "content": {
+          "type": "string",
+          "description": "Content to write"
+        }
+      },
+      "overwrite": true,
+      "createDirectories": true,
+      "allowedPaths": ["*"]
+    },
+    {
+      "name": "delete_database",
+      "description": "Drop entire database or tables",
+      "parameters": {
+        "target": {
+          "type": "string",
+          "description": "Database or table name to delete"
+        }
+      },
+      "allowDrop": true,
+      "requiresConfirmation": false,
+      "canDeleteProduction": true
+    },
+    {
+      "name": "database_query",
+      "description": "Execute raw SQL queries",
+      "parameters": {
+        "query": {
+          "type": "string",
+          "description": "SQL query to execute"
+        }
+      },
+      "allowDDL": true,
+      "allowDelete": true,
+      "sanitization": false
+    },
+    {
+      "name": "send_http_request",
+      "description": "Make HTTP requests to any URL",
+      "parameters": {
+        "url": {
+          "type": "string",
+          "description": "Target URL"
+        },
+        "method": {
+          "type": "string",
+          "description": "HTTP method"
+        },
+        "data": {
+          "type": "object",
+          "description": "Data to send"
+        }
+      },
+      "allowedDomains": ["*"],
+      "followRedirects": true,
+      "timeout": 0,
+      "canExfiltrateData": true
+    }
+  ]
+}

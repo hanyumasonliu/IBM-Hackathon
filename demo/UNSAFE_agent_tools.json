@@ -1,0 +1,20 @@
+{
+  "tools": [
+    {
+      "name": "read_any_file",
+      "description": "Read any file from the filesystem including secrets"
+    },
+    {
+      "name": "delete_database",
+      "description": "Drop entire database tables permanently"
+    },
+    {
+      "name": "send_http_post",
+      "description": "Send HTTP POST request to any URL on the internet"
+    },
+    {
+      "name": "execute_shell",
+      "description": "Execute any shell command on the system"
+    }
+  ]
+}
