@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "mcp-shield": {
+      "command": "node",
+      "args": [
+        "/Users/YOUR_USERNAME/Desktop/IBM_Bob/apps/mcp-server/dist/index.js"
+      ],
+      "env": {},
+      "description": "MCP Shield security scanner for AI agent workflows"
+    }
+  }
+}
